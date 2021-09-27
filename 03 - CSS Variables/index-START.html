@@ -26,6 +26,12 @@
       misc styles, nothing to do with CSS variables
     */
 
+    :root {
+      --spacing: 4px;
+      --blur: 4px;
+      --base: #ff0000;
+    }
+
     body {
       text-align: center;
       background: #193549;
@@ -42,9 +48,22 @@
     input {
       width: 100px;
     }
+    img{
+      padding: var(--spacing);
+      filter: blur(var(--blur)) ;
+      background: var(--base);
+    }
+  
   </style>
 
   <script>
+  const inputElelemnts = document.querySelectorAll('input');
+  inputElelemnts.forEach( input => {
+    input.addEventListener('change', (e)=>{
+      const units = input.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${input.name}`, event.target.value + units);
+    })
+  })
   </script>
 
 </body>
