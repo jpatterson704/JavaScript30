@@ -65,10 +65,10 @@
     console.log('%c Task 4: How many years did all the inventors live all together?', 'background: #222; color: #bada55');
     const yearsLived = inventors.reduce( (sum, {passed, year}) => sum + passed-year , 0);
 
-    const totalYears = inventors.reduce((total, inventor) => {
-      return total + (inventor.passed - inventor.year);
-    }, 0);
-    console.log(yearsLived,totalYears)
+    // const totalYears = inventors.reduce((total, inventor) => {
+    //   return total + (inventor.passed - inventor.year);
+    // }, 0);
+    console.log(yearsLived)
 
 
 
@@ -84,10 +84,8 @@
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
       const elementsNodes = document.querySelectorAll('.mw-category ul li a');
-      // const elements = Array.from(elementsNodes);
       const elements = [...elementsNodes]
       const listWithDe = elements.filter( el=>el.innerHTML.includes('de')).map((el)=>el.innerHTML)
-
       console.log(listWithDe)
  
 
@@ -110,18 +108,28 @@
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
+    console.log('%c Task 8: Sum up the instances of each of these', 'background: #222; color: #bada55');
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
-    function instancesSum( arr ){
-
-      const originalArr = [...arr];
-
-      
-
-
-    }
-
-    instancesSum(data)
+    const sumArray = data.reduce( (obj, element)=>{
+      if(!obj[element]){
+        obj[element]=0;
+      }
+      if(element==='car'){
+        obj.car++;
+      }else if(element==='truck'){
+        obj.truck++;
+      }else if(element==='bike'){
+        obj.bike++;
+      }else if(element==='walk'){
+        obj.walk++;
+      }else{
+        obj.van++;
+      }
+      return obj
+    },
+    {})
+    console.log(sumArray)
 
 
   </script>
