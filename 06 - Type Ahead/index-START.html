@@ -21,24 +21,37 @@ const cities = [];
 
 fetch(endpoint)  
 .then(response => response.json())
-.then(data => cities.push(...data));
+.then(data => cities.push(...data))
+ 
 
-function renderCitySuggestions(cities){
+function renderCitySuggestions(cities, search){
+
   const suggestionEl = document.querySelector('.suggestions');
   suggestionEl.innerHTML = "";
+
   cities.forEach( (city)=>{
-    const li = document.createElement("li");
-    const node = document.createTextNode( `${city.city}`);
-    li.appendChild(node);
-    suggestionEl.append( li)
+    city.population = city.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const cityAndState = `${city.city}, ${city.state}`;
+    const regex = new RegExp(search , "gi");
+    const result = cityAndState.replace(regex, `<span class="hl">${search}</span>`);
  
-  } )
+    suggestionEl.innerHTML += `
+      <li>
+        <span class="name">${result}</span>
+        <span class="population">${city.population}</span>
+      </li>`;
+  });
 
 }
 
 document.querySelector('.search').addEventListener('input', (e)=>{
-  const filteredCities = cities.filter((city)=>city.city.includes(e.target.value));
-  renderCitySuggestions(filteredCities)
+  const filteredCities = cities.filter((city)=>{
+    const regex = new RegExp(e.target.value , "i");
+    if(city.city.match(regex) || city.state.match(regex)){
+      return true;
+    }
+  });
+  renderCitySuggestions(filteredCities, e.target.value)
 })
  
 </script>
