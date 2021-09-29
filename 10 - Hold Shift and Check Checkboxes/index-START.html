@@ -96,6 +96,29 @@
   </div>
 
 <script>
+  let shiftIsPressed = false;
+  const inputList = document.querySelectorAll('input');
+
+  window.addEventListener('keyup', logKey);
+  window.addEventListener('keydown', logKey);
+
+  inputList.forEach(input=>{
+    input.addEventListener('change', (e)=>{
+      console.log(inputList[1].nextElementSibling.isEqualNode(e.srcElement.nextElementSibling));
+      // console.log(inputList[0].nextElementSibling);
+      // console.log('chcked', e.srcElement ,  inputList , shiftIsPressed);
+
+    })
+  })
+
+  function selectInputs (){
+
+  }
+
+  function logKey(e) {
+    shiftIsPressed = e.shiftKey
+  }
+
 </script>
 </body>
 </html>
