@@ -102,11 +102,20 @@
   window.addEventListener('keyup', logKey);
   window.addEventListener('keydown', logKey);
 
-  inputList.forEach(input=>{
+  let firstSelection;
+
+  inputList.forEach((input, index, array)=>{
+    // console.log(index)
     input.addEventListener('change', (e)=>{
-      console.log(inputList[1].nextElementSibling.isEqualNode(e.srcElement.nextElementSibling));
-      // console.log(inputList[0].nextElementSibling);
-      // console.log('chcked', e.srcElement ,  inputList , shiftIsPressed);
+      firstSelection = e.srcElement;
+      
+      // console.log(inputList[1].nextElementSibling.isEqualNode(e.srcElement.nextElementSibling));
+      if(shiftIsPressed && isAnInputChecked()){
+        inputList.forEach((input, index2)=>{
+          console.log(index, index2)
+          // input.checked = true;
+        })
+      }
 
     })
   })
@@ -117,6 +126,10 @@
 
   function logKey(e) {
     shiftIsPressed = e.shiftKey
+  }
+
+  function isAnInputChecked(){
+    return [...inputList].filter( input=>input.checked===true).length===2;
   }
 
 </script>
