@@ -98,40 +98,41 @@
 <script>
   let shiftIsPressed = false;
   const inputList = document.querySelectorAll('input');
+  const lastInputsSelected = [];
 
   window.addEventListener('keyup', logKey);
   window.addEventListener('keydown', logKey);
 
-  let firstSelection;
-
   inputList.forEach((input, index, array)=>{
-    // console.log(index)
-    input.addEventListener('change', (e)=>{
-      firstSelection = e.srcElement;
-      
-      // console.log(inputList[1].nextElementSibling.isEqualNode(e.srcElement.nextElementSibling));
-      if(shiftIsPressed && isAnInputChecked()){
+
+    input.addEventListener('click', (e)=>{
+
+      lastInputsSelected.push(e.srcElement);
+      console.log(e.shiftKey, shiftIsPressed)
+      if(shiftIsPressed){
+
+        let firstIndex = [...inputList].indexOf(lastInputsSelected[lastInputsSelected.length-2]);
+        let lastIndex = [...inputList].indexOf(lastInputsSelected[lastInputsSelected.length-1]);
+ 
         inputList.forEach((input, index2)=>{
-          console.log(index, index2)
-          // input.checked = true;
+          if( firstIndex<lastIndex && index2<lastIndex && index2>firstIndex){
+            input.checked=true;
+          }else if(index2>lastIndex && index2<firstIndex){
+            input.checked=true;
+          }
         })
       }
 
     })
+    firstSelectionSelected=null;
   })
 
-  function selectInputs (){
-
-  }
-
+ 
   function logKey(e) {
     shiftIsPressed = e.shiftKey
   }
 
-  function isAnInputChecked(){
-    return [...inputList].filter( input=>input.checked===true).length===2;
-  }
-
+ 
 </script>
 </body>
 </html>
